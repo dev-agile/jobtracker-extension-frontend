@@ -1,8 +1,9 @@
 /**
- * Popup entry — load local cache, sync server, wire controls.
+ * Popup entry — auth gate, then load local cache, sync server, wire controls.
  * See popup/README.md for folder layout.
  */
 
+import { bootstrapAuth, initAuthView } from "./auth/auth-view.js";
 import { loadLocalJobs } from "./actions/local.js";
 import { syncJobs } from "./actions/sync.js";
 import {
@@ -22,12 +23,20 @@ import { setLoading } from "./ui/loading.js";
 
 setRenderJobsList(renderJobs);
 
-function init() {
+function startApp() {
   renderQuickFilters();
   setLoading(true);
   loadLocalJobs().finally(() => {
     setLoading(false);
     syncJobs();
+  });
+}
+
+function init() {
+  initAuthView({ onAuthed: () => startApp() });
+
+  bootstrapAuth().then((user) => {
+    if (user) startApp();
   });
 
   searchInput.addEventListener("input", applyFilters);

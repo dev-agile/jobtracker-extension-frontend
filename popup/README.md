@@ -8,7 +8,10 @@ popup/
 │   ├── index.html      # loads ../src/main.js
 │   └── styles.css
 └── src/
-    ├── main.js           # entry: init + event wiring
+    ├── main.js           # entry: auth gate + init + event wiring
+    ├── auth/
+    │   ├── api.js        # login / invite via background
+    │   └── auth-view.js  # sign-in & accept-invite UI
     ├── config.js         # constants (statuses, selectors, regexes)
     ├── dom.js            # getElementById refs
     ├── state.js          # allJobs, banner timer

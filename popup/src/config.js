@@ -1,5 +1,7 @@
 /** Popup constants — edit when adding fields, filters, or card sections */
 
+export const API_BASE = "http://localhost:8000";
+
 export const BANNER_HIDE_MS = 3200;
 export const MAX_SKILLS_SHOWN = 8;
 export const DEFAULT_STATUS = "applied";

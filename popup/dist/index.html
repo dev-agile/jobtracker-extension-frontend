@@ -7,13 +7,96 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <section class="popup">
+    <section id="authView" class="popup auth-view">
       <header class="popup__header">
         <div>
           <h1>Job Tracker</h1>
-          <p class="subtitle">Track your applications right from this popup.</p>
+          <p class="subtitle">Sign in to sync applications with your team.</p>
         </div>
-        <button id="refreshBtn" class="primary-btn" type="button">Sync</button>
+      </header>
+
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab auth-tab--active" data-auth-tab="login">
+          Sign in
+        </button>
+        <button type="button" class="auth-tab" data-auth-tab="invite">
+          Accept invite
+        </button>
+      </div>
+
+      <div data-auth-panel="login" class="auth-panel">
+        <form id="loginForm" class="auth-form">
+          <div id="authError" class="auth-error auth-error--hidden"></div>
+          <label>
+            Email
+            <input name="email" type="email" required autocomplete="username" />
+          </label>
+          <label>
+            Password
+            <input name="password" type="password" required autocomplete="current-password" />
+          </label>
+          <button type="submit" class="primary-btn auth-submit">Sign in</button>
+        </form>
+        <p class="auth-footnote">
+          Got an invite email? Use <strong>Accept invite</strong> once, then sign in here next time.
+        </p>
+      </div>
+
+      <div data-auth-panel="invite" class="auth-panel auth-panel--hidden">
+        <form id="inviteForm" class="auth-form">
+          <div id="inviteError" class="auth-error auth-error--hidden"></div>
+          <p id="invitePreview" class="auth-hint auth-hint--hidden"></p>
+          <label>
+            Invite link or token
+            <input
+              id="inviteToken"
+              name="inviteToken"
+              type="text"
+              required
+              placeholder="Paste link from your admin"
+            />
+          </label>
+          <label>
+            Display name (optional)
+            <input name="displayName" type="text" autocomplete="name" />
+          </label>
+          <label>
+            Password
+            <input
+              name="invitePassword"
+              type="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+            />
+          </label>
+          <label>
+            Confirm password
+            <input
+              name="invitePasswordConfirm"
+              type="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+            />
+          </label>
+          <button type="submit" class="primary-btn auth-submit">Create account</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="appView" class="popup app-view--hidden">
+      <header class="popup__header">
+        <div>
+          <h1>Job Tracker</h1>
+          <p class="subtitle">
+            Signed in as <span id="userEmail" class="user-email"></span>
+          </p>
+        </div>
+        <div class="header-actions">
+          <button id="refreshBtn" class="primary-btn" type="button">Sync</button>
+          <button id="logoutBtn" class="secondary-btn" type="button">Sign out</button>
+        </div>
       </header>
 
       <section class="meta-row" aria-label="Job stats">
@@ -67,7 +150,7 @@
       <div id="jobsContainer" class="jobs"></div>
       <div id="emptyState" class="empty-state">
         <p>No jobs tracked yet.</p>
-        <p class="hint">Click an “Apply” button on a job posting to log it.</p>
+        <p class="hint">Open a job on Upwork and click “Save this job” to log it.</p>
       </div>
 
       <footer class="popup__footer">
