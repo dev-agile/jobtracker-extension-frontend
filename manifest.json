@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "Job Tracker",
+    "version": "0.1.0",
+    "description": "Records job applications and syncs them to a FastAPI backend.",
+    "icons": {
+
+    },
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup/dist/index.html",
+        "default_title": "Job Tracker"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content-script.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ]
+}
