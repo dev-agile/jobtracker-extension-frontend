@@ -279,7 +279,6 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         });
         return true;
     }
-
     if (msg.type === 'GET_LOCAL_JOBS') {
         storageGet({ jobs: [] }).then((result) => sendResponse({ jobs: result.jobs }));
         return true;
