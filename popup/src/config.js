@@ -38,6 +38,7 @@ export const JOB_CARD_FACT_FIELDS = [
   { label: "Hourly range", key: "hourlyRange" },
   { label: "Hourly", key: "hourly" },
   { label: "Project length", key: "projectLength" },
+  { label: "Fixed price", key: "fixedPrice" },
 ];
 
 export const JOB_CARD_SELECTORS = {

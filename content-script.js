@@ -507,6 +507,7 @@
             hourlyRange: "",
             hourly: "",
             projectLength: "",
+            fixedPrice: "",
         };
 
         const items = scope.querySelectorAll(
@@ -518,13 +519,26 @@
                 item.querySelector("small, [class*='text-light']")?.textContent || ""
             );
             const label = rawLabel.toLowerCase();
-            const value =
-                getText("strong", item) ||
-                cleanText(item.querySelector(".header")?.textContent || "") ||
-                cleanText(item.querySelector("[class*='value']")?.textContent || "");
+            const strong = item.querySelector("strong");
             const hint = cleanText(
                 item.getAttribute("data-test") || item.getAttribute("data-cy") || ""
             ).toLowerCase();
+
+            const isProjectLength =
+                (label && label.includes("project length")) ||
+                (label && label.includes("duration")) ||
+                hint.includes("duration");
+                
+            const value = cleanText(
+                isProjectLength
+                    ? strong?.querySelector("span")?.textContent ||
+                      strong?.firstElementChild?.textContent ||
+                      ""
+                    : strong?.textContent ||
+                      item.querySelector(".header")?.textContent ||
+                      item.querySelector("[class*='value']")?.textContent ||
+                      ""
+            );
 
             // Upwork occasionally renders hint-only rows without a visible label.
             if (!value) continue;
@@ -546,7 +560,7 @@
                 (label && label.includes("fixed price")) ||
                 hint.includes("fixed-price")
             ) {
-                meta.hourly = value;
+                meta.fixedPrice = value;
                 continue;
             }
             if (
@@ -559,6 +573,14 @@
         }
 
         return meta;
+    }
+
+    // for cover letter
+    function scrapeUpworkCoverLetter() {
+        const el = document.querySelector('textarea[aria-labelledby="cover_letter_label"]')
+            || document.querySelector('#cover_letter_label ~ div textarea')
+            || document.querySelector('textarea.inner-textarea');
+        return cleanText(el?.value || "");
     }
 
     function scrapeUpworkJob() {
@@ -577,8 +599,9 @@
         const details = scrapeUpworkDetails(scope);
         const skills = scrapeUpworkSkills(scope);
         const sidebarMeta = scrapeUpworkSidebarMeta(scope);
+        const coverLetter = scrapeUpworkCoverLetter(scope);
 
-        return { title, company, posted, details, skills, ...sidebarMeta };
+        return { title, company, posted, details, skills, ...sidebarMeta, coverLetter };
     }
 
     function sendJobApplied(payloadOverrides) {
@@ -600,7 +623,9 @@
             experienceLevel: scraped.experienceLevel,
             hourlyRange: scraped.hourlyRange,
             hourly: scraped.hourly,
+            fixedPrice: scraped.fixedPrice,
             projectLength: scraped.projectLength,
+            coverLetter: scraped.coverLetter,
             url: getCanonicalJobUrl(),
             appliedAt: new Date().toISOString(),
             status: "applied",
