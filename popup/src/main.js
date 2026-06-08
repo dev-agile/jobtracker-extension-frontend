@@ -19,8 +19,10 @@ import { renderJobs } from "./render/jobs-list.js";
 import { renderQuickFilters } from "./render/quick-filters.js";
 import { setAllJobs } from "./state.js";
 import { showBanner } from "./ui/banner.js";
+import { initFullscreenView, isFullscreenView, openFullscreenApp } from "./ui/fullscreen.js";
 import { setLoading } from "./ui/loading.js";
 
+initFullscreenView();
 setRenderJobsList(renderJobs);
 
 function startApp() {
@@ -68,6 +70,11 @@ function init() {
       });
     });
   }
+
+  document.querySelectorAll("[data-open-fullscreen]").forEach((btn) => {
+    if (isFullscreenView()) return;
+    btn.addEventListener("click", openFullscreenApp);
+  });
 }
 
 document.addEventListener("DOMContentLoaded", init);

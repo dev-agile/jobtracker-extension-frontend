@@ -303,7 +303,8 @@
             toastEl.style.borderRadius = "10px";
             toastEl.style.fontSize = "13px";
             toastEl.style.fontWeight = "600";
-            toastEl.style.boxShadow = "0 12px 24px rgba(0,0,0,0.22)";
+            toastEl.style.fontFamily = '"IBM Plex Sans", system-ui, sans-serif';
+            toastEl.style.boxShadow = "0 8px 26px -10px rgba(20, 50, 42, 0.28)";
             toastEl.style.transition = "opacity 140ms ease, transform 140ms ease";
             toastEl.style.opacity = "0";
             toastEl.style.transform = "translateY(6px)";
@@ -311,17 +312,17 @@
         }
 
         if (variant === "warning") {
-            toastEl.style.background = "#fff7ed";
-            toastEl.style.color = "#9a3412";
-            toastEl.style.border = "1px solid #fed7aa";
+            toastEl.style.background = "#f7ecd2";
+            toastEl.style.color = "#d8961f";
+            toastEl.style.border = "1px solid rgba(216, 150, 31, 0.25)";
         } else if (variant === "error") {
-            toastEl.style.background = "#fef2f2";
-            toastEl.style.color = "#b91c1c";
-            toastEl.style.border = "1px solid #fecaca";
+            toastEl.style.background = "#fbe4df";
+            toastEl.style.color = "#df4f37";
+            toastEl.style.border = "1px solid rgba(223, 79, 55, 0.2)";
         } else {
-            toastEl.style.background = "#ecfdf3";
-            toastEl.style.color = "#166534";
-            toastEl.style.border = "1px solid #bbf7d0";
+            toastEl.style.background = "#dcf0e4";
+            toastEl.style.color = "#0a6e47";
+            toastEl.style.border = "1px solid rgba(14, 143, 92, 0.2)";
         }
 
         toastEl.textContent = message;
@@ -696,13 +697,20 @@
         btn.style.zIndex = "2147483647";
         btn.style.padding = "10px 14px";
         btn.style.border = "none";
-        btn.style.borderRadius = "8px";
-        btn.style.background = "#14a800";
+        btn.style.borderRadius = "9px";
+        btn.style.background = "#14322a";
         btn.style.color = "#fff";
         btn.style.fontSize = "13px";
         btn.style.fontWeight = "600";
+        btn.style.fontFamily = '"IBM Plex Sans", system-ui, sans-serif';
         btn.style.cursor = "pointer";
-        btn.style.boxShadow = "0 8px 22px rgba(0,0,0,0.2)";
+        btn.style.boxShadow = "0 6px 16px -4px rgba(20, 50, 42, 0.35)";
+        btn.addEventListener("mouseenter", () => {
+            btn.style.background = "#0a6e47";
+        });
+        btn.addEventListener("mouseleave", () => {
+            btn.style.background = "#14322a";
+        });
         btn.addEventListener("click", () => sendJobApplied());
         document.body.appendChild(btn);
     }
