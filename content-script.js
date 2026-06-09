@@ -584,6 +584,19 @@
         return cleanText(el?.value || "");
     }
 
+    // for connects used in bidding
+    function scrapeUpworkConnects() {
+        const footer = document.querySelector(".fe-apply-footer-controls");
+        if (!footer) return "";
+
+        for (const btn of footer.querySelectorAll("button")) {
+            const text = cleanText(btn.textContent);
+            const match = text.match(/(\d+)\s*connects?/i);
+            if (match) return match[1];
+        }
+        return "";
+    }
+
     function scrapeUpworkJob() {
         if (!isUpworkPage()) {
             return null;
@@ -601,8 +614,9 @@
         const skills = scrapeUpworkSkills(scope);
         const sidebarMeta = scrapeUpworkSidebarMeta(scope);
         const coverLetter = scrapeUpworkCoverLetter(scope);
+        const connects = scrapeUpworkConnects();
 
-        return { title, company, posted, details, skills, ...sidebarMeta, coverLetter };
+        return { title, company, posted, details, skills, ...sidebarMeta, coverLetter, connects };
     }
 
     function sendJobApplied(payloadOverrides) {
@@ -627,6 +641,7 @@
             fixedPrice: scraped.fixedPrice,
             projectLength: scraped.projectLength,
             coverLetter: scraped.coverLetter,
+            connects: scraped.connects,
             url: getCanonicalJobUrl(),
             appliedAt: new Date().toISOString(),
             status: "applied",

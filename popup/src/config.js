@@ -53,6 +53,7 @@ export const JOB_CARD_SELECTORS = {
   skillsWrap: ".job-card__skills-wrap",
   statusPill: ".job-card__status-pill",
   statusSelect: ".job-card__select",
+  connects: ".job-card__connects",
   deleteBtn: ".job-card__delete-btn",
 };
 

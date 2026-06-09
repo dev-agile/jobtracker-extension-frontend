@@ -31,6 +31,7 @@ export function renderJobCard(job) {
     skillsWrap: queryCard(node, "skillsWrap"),
     statusPill: queryCard(node, "statusPill"),
     statusSelect: queryCard(node, "statusSelect"),
+    connects: queryCard(node, "connects"),
     deleteBtn: queryCard(node, "deleteBtn"),
   };
 
@@ -82,6 +83,11 @@ export function renderJobCard(job) {
     els.statusPill,
     handleStatusChange
   );
+
+  if (els.connects) {
+    els.connects.textContent = job.connects || "0";
+    els.connects.style.display = "block";
+  }
 
   if (els.deleteBtn) {
     els.deleteBtn.addEventListener("click", () => {
