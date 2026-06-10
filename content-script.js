@@ -608,7 +608,7 @@
         }
 
         const title = scrapeUpworkTitle(scope);
-        const company = scrapeUpworkCategory(scope);
+        const role = scrapeUpworkCategory(scope);
         const posted = scrapeUpworkPosted(scope);
         const details = scrapeUpworkDetails(scope);
         const skills = scrapeUpworkSkills(scope);
@@ -616,7 +616,7 @@
         const coverLetter = scrapeUpworkCoverLetter(scope);
         const connects = scrapeUpworkConnects();
 
-        return { title, company, posted, details, skills, ...sidebarMeta, coverLetter, connects };
+        return { title, role, posted, details, skills, ...sidebarMeta, coverLetter, connects };
     }
 
     function sendJobApplied(payloadOverrides) {
@@ -631,7 +631,7 @@
 
         const payload = {
             jobTitle: scraped.title,
-            company: scraped.company,
+            role: scraped.role,
             posted: scraped.posted,
             jobDetails: scraped.details,
             skills: scraped.skills,
