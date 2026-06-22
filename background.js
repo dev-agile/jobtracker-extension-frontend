@@ -388,7 +388,23 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
 
     if (msg.type === 'LOGOUT') {
-        clearAuthSession().then(() => sendResponse({ ok: true }));
+        (async () => {
+            try {
+                const data = await apiFetch('/auth/logout', { method: 'POST' });
+                if (data.message === 'Logged out successfully') {
+                    await clearAuthSession();
+                    sendResponse({ ok: true });
+                } else {
+                    await clearAuthSession();
+                    sendResponse({ error: data.message || 'Logout failed' });
+                }
+            } catch (error) {
+                await clearAuthSession();
+                sendResponse({ error: error.message || 'Logout failed' });
+            }
+        })().catch((error) => {
+            sendResponse({ error: error.message || 'Logout failed' });
+        });
         return true;
     }
 
