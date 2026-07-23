@@ -1,5 +1,5 @@
 // background.js
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = 'https://jobtrack-backend-7vao.onrender.com/api';
 const RETRY_INTERVAL_MS = 60 * 1000;
 const STALE_OUTBOX_MS = 30 * 60 * 1000;
 const OutboxAction = Object.freeze({
